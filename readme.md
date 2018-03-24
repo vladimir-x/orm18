@@ -17,19 +17,19 @@
 
 ### 1) проектируем сущность
 
-@Entity - метка сущности. должна присутствовать у каждой сущности, у которой есть поля для отображения в базу или метаформу.
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE ) стратегия наследования. Поддреживается две с тратегии
-* InheritanceType.SINGLE_TABLE - всё в одной таблице (стратегия по умолчанию )
-* InheritanceType.JOINED - базовая сущность в отдельной таблице
+	@Entity - метка сущности. должна присутствовать у каждой сущности, у которой есть поля для отображения в базу или метаформу.
 
-@Table("имя таблицы в БД. Рекомендуется ссылаться на константу в классе")
+	@Inheritance(strategy = InheritanceType.SINGLE_TABLE ) стратегия наследования. Поддреживается две с тратегии.
+	* InheritanceType.SINGLE_TABLE - всё в одной таблице (стратегия по умолчанию )
+	* InheritanceType.JOINED - базовая сущность в отдельной таблице
 
+	@Table("имя таблицы в БД. Рекомендуется ссылаться на константу в классе")
 
 
 Описание полей сущности производится через аннотации:
 
-@Id - указание , что это колонка ID 
-@Column(name = "id") - имя (поля)колонки в БД
+	@Id - указание , что это колонка ID 
+	@Column(name = "id") - имя (поля)колонки в БД
 
 
 Пример аннотированной сущности
@@ -102,7 +102,7 @@
 Car car = EntityManager.loadByID(Car.class,11);
 
 
-//вкладываемый
+//Вкладывающие
 
 Car car = new Car();
 EntityManager.loadByID(Car.class,11,car);
@@ -121,7 +121,7 @@ EntityManager.loadByID(Car.class,11,car);
 	List<Car> cars = EntityManager.loadByFromClause(from, clause);
 	System.out.println(cars);
 
-	//вкладываемый
+	//Вкладывающие
 	Car setInner = new Car();
 	EntityManager.loadOneByFromClause(from, clause, setInner);
 	System.out.println(setInner);
@@ -129,7 +129,8 @@ EntityManager.loadByID(Car.class,11,car);
 
 ### 3.2) Загрузка с join
 
-// джойн с простым условием по равенству значений полей
+	// джойн с простым условием по равенству значений полей
+
 	From<Driver> from1 = new From<>(Driver.class);
 	Join carJoin1 = from1.join(Car.class, Car_.id, from1.get(Driver_.carId));
 	Driver res1 = EntityManager.loadOneByFromClause(from1,
@@ -163,7 +164,7 @@ EntityManager.loadByID(Car.class,11,car);
 	List<Car> result1 = mapper1.getResult();
 	System.out.println(result1);
 
-	// вкладываемый
+	// Вкладывающие
 	Car res2 = new Car();
 	EntityMapper<Car> mapper2 = new EntityMapper(selector);
 	mapper2.setResultInstance(res2);
